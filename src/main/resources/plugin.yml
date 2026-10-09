@@ -1,11 +1,15 @@
 name: PerformanceMetrics
-version: '1.0.0'
+version: '1.1.0'
 main: cn.nyatu.sakimugi.performancemetrics.PerformanceMetricsPlugin
 api-version: '1.21'
 softdepend:
   - PlaceholderAPI
 commands:
-  mspt:
-    description: Query the recent average MSPT.
-    usage: /mspt [10s|1m]
-    permission: mspt.use
+  gpm:
+    description: Query the current server MSPT and TPS.
+    usage: /gpm
+    permission: gpm.use
+permissions:
+  gpm.use:
+    description: Allows using /gpm to view server performance metrics.
+    default: true

@@ -6,7 +6,7 @@
 
     <groupId>cn.nyatu</groupId>
     <artifactId>PerformanceMetrics</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <packaging>jar</packaging>
 
     <name>PerformanceMetrics</name>
@@ -50,7 +50,7 @@
     </dependencies>
 
     <build>
-        <finalName>PerformanceMetrics-1.0.0</finalName>
+        <finalName>PerformanceMetrics-1.1.0</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

@@ -6,14 +6,18 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
-/**
- * PlaceholderAPI expansion for the server's calculated average MSPT.
- */
+/** PlaceholderAPI expansion for the server's MSPT and TPS. */
 public final class PerformanceMetricsExpansion extends PlaceholderExpansion {
+
+    /** Keep this plugin's internal expansion registered across /papi reload. */
+    @Override
+    public boolean persist() {
+        return true;
+    }
 
     @Override
     public @NotNull String getIdentifier() {
-        return "mspt";
+        return "gpm";
     }
 
     @Override
@@ -23,47 +27,27 @@ public final class PerformanceMetricsExpansion extends PlaceholderExpansion {
 
     @Override
     public @NotNull String getVersion() {
-        return "1.0.0";
+        return "1.1.0";
     }
 
     @Override
     public String onRequest(OfflinePlayer player, @NotNull String params) {
         PerformanceMetricsPlugin plugin = PerformanceMetricsPlugin.getInstance();
+        String normalized = params == null ? "" : params.trim().toLowerCase(Locale.ROOT);
         if (plugin == null) {
-            return "0.00";
+            return switch (normalized) {
+                case "mspt", "tps" -> "0.00";
+                default -> null;
+            };
         }
 
-        String normalized = params == null ? "" : params.trim();
-        if (isDefaultParam(normalized)) {
-            return format(plugin.getAverageTickMs(60));
-        }
-
-        switch (normalized.toLowerCase(Locale.ROOT)) {
-            case "10s" -> {
-                return format(plugin.getAverageTickMs(10));
-            }
-            case "10", "10sec", "10seconds" -> {
-                return format(plugin.getAverageTickMs(10));
-            }
-            case "1m", "60s", "60", "1min", "1minute" -> {
-                return format(plugin.getAverageTickMs(60));
-            }
-            default -> {
-                return format(plugin.getAverageTickMs(60));
-            }
-        }
-    }
-
-    private boolean isDefaultParam(String params) {
-        if (params == null || params.isBlank()) {
-            return true;
-        }
-
-        String normalized = params.trim();
-        return normalized.equals("_")
-            || normalized.equalsIgnoreCase("default")
-            || normalized.equalsIgnoreCase("null")
-            || normalized.equalsIgnoreCase("none");
+        return switch (normalized) {
+            case "mspt" -> format(plugin.getMspt());
+            case "tps" -> format(plugin.getTps());
+            case "mspt_c" -> plugin.getColoredMspt();
+            case "tps_c" -> plugin.getColoredTps();
+            default -> null;
+        };
     }
 
     private String format(double value) {

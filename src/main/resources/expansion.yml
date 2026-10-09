@@ -1,0 +1,6 @@
+name: PerformanceMetrics
+main: cn.nyatu.sakimugi.performancemetrics.PerformanceMetricsExpansion
+version: '1.0.0'
+description: Shows the server average MSPT for PlaceholderAPI.
+authors:
+  - SakiMugi

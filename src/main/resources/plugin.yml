@@ -1,0 +1,11 @@
+name: PerformanceMetrics
+version: '1.0.0'
+main: cn.nyatu.sakimugi.performancemetrics.PerformanceMetricsPlugin
+api-version: '1.21'
+softdepend:
+  - PlaceholderAPI
+commands:
+  mspt:
+    description: Query the recent average MSPT.
+    usage: /mspt [10s|1m]
+    permission: mspt.use
